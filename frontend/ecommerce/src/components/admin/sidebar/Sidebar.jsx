@@ -1,87 +1,35 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Use Link for navigation
-import { Box, ShoppingCart, List, LogOut, ChevronDown, ChevronRight } from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Box, ShoppingCart, List, LogOut } from "lucide-react";
 
 const Sidebar = ({ onLogout }) => {
-  const [isProductMenuOpen, setIsProductMenuOpen] = useState(false);
-  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-800 text-white">
-      {/* Sidebar Header */}
       <div className="flex items-center justify-center p-4 bg-gray-900">
         <h2 className="text-xl font-semibold">Admin Dashboard</h2>
       </div>
-
-      {/* Sidebar Links */}
       <nav className="flex-1">
         <ul className="space-y-4 p-4">
-          {/* Products Menu */}
+          {/* Products Link */}
           <li>
-            <div
-              className="flex items-center justify-between cursor-pointer text-lg hover:bg-gray-700 p-2 rounded-md"
-              onClick={() => setIsProductMenuOpen(!isProductMenuOpen)}
+            <Link
+              to="/admin/products"
+              className="flex items-center space-x-2 text-lg hover:bg-gray-700 p-2 rounded-md"
             >
-              <div className="flex items-center space-x-2">
-                <Box size={20} />
-                <span>Products</span>
-              </div>
-              {isProductMenuOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-            </div>
-            {isProductMenuOpen && (
-              <ul className="ml-6 mt-2 space-y-2">
-                <li>
-                  <Link
-                    to="/admin/products/add"
-                    className="text-sm hover:bg-gray-700 p-2 rounded-md block"
-                  >
-                    Add Product
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/admin/products/list"
-                    className="text-sm hover:bg-gray-700 p-2 rounded-md block"
-                  >
-                    Product List
-                  </Link>
-                </li>
-              </ul>
-            )}
+              <Box size={20} />
+              <span>Products</span>
+            </Link>
           </li>
-
-          {/* Categories Menu */}
+          
+          {/* Categories Link */}
           <li>
-            <div
-              className="flex items-center justify-between cursor-pointer text-lg hover:bg-gray-700 p-2 rounded-md"
-              onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
+            <Link
+              to="/admin/categories"
+              className="flex items-center space-x-2 text-lg hover:bg-gray-700 p-2 rounded-md"
             >
-              <div className="flex items-center space-x-2">
-                <List size={20} />
-                <span>Categories</span>
-              </div>
-              {isCategoryMenuOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-            </div>
-            {isCategoryMenuOpen && (
-              <ul className="ml-6 mt-2 space-y-2">
-                <li>
-                  <Link
-                    to="/admin/categories/add"
-                    className="text-sm hover:bg-gray-700 p-2 rounded-md block"
-                  >
-                    Add Category
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/admin/categories/list"
-                    className="text-sm hover:bg-gray-700 p-2 rounded-md block"
-                  >
-                    Category List
-                  </Link>
-                </li>
-              </ul>
-            )}
+              <List size={20} />
+              <span>Categories</span>
+            </Link>
           </li>
 
           {/* Orders Link */}

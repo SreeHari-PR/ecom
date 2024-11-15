@@ -1,31 +1,51 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import api from '../../../services/api'
 
 export default function CategorySidebar() {
   const [priceRange, setPriceRange] = useState([399, 11100])
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const categories = [
-    'Extension',
-    'Mobile Phone Cases',
-    'Power Banks',
-    'Headsets',
-    'Charger And data cable'
-  ]
+  useEffect(() => {
+   
+    const fetchCategories = async () => {
+      try {
+        const response = await api.get('/auth/category/list') 
+        setCategories(response.data)
+        console.log(response.data)
+        setLoading(false)
+      } catch (err) {
+        setError('Failed to fetch categories')
+        setLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
 
   return (
     <div className="w-64 p-4">
       <div className="mb-8">
         <h2 className="text-lg font-semibold mb-4">Product Categories</h2>
-        <ul className="space-y-2">
-          {categories.map((category) => (
-            <li key={category}>
-              <a href="#" className="text-gray-600 hover:text-purple-700">
-                {category}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="text-red-600">{error}</p>
+        ) : (
+          <ul className="space-y-2">
+            {categories.map((category) => (
+              <li key={category}>
+                <a href="#" className="text-gray-600 hover:text-purple-700">
+                  {category}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div>

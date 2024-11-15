@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import api from "../../../services/api";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
@@ -8,17 +9,13 @@ const AddCategory = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/categories/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, description }),
-      });
+        const response = await api.post("/admin/categories/add", {
+            name, 
+            description
+          });
+      
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (response.status==201) {
         alert("Category added successfully!");
         setName("");
         setDescription("");
@@ -32,6 +29,7 @@ const AddCategory = () => {
   };
 
   return (
+
     <div className="p-8 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold mb-6">Add Category</h1>
       <form
